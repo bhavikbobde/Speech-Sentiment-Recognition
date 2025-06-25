@@ -23,7 +23,7 @@ def focal_loss(gamma=2.0, alpha=0.75):
 
 def load_and_process_audio(file_path, sr=22050, duration=3):
     """Load and process audio file with error handling"""
-    file_path=r"D:\datasets (NLP)\audio_speech\Actor_07\03-01-02-01-01-02-07.wav"
+    file_path="file_path"
     try:
         audio, _ = librosa.load(file_path, sr=sr)
         if len(audio) > sr * duration:
