@@ -1,1 +1,1 @@
-{"fearful": {"accuracy": "37.93%", "reason": "Persistent low performance despite augmentation and class balancing", "samples_removed": 146}, "disgust": {"accuracy": "40.00%", "reason": "Persistent low performance despite augmentation and class balancing", "samples_removed": 75}}
+{"happy": {"accuracy": "34.48%", "reason": "Persistent low performance despite augmentation and class balancing", "samples_removed": 146}, "sad": {"accuracy": "44.83%", "reason": "Persistent low performance despite augmentation and class balancing", "samples_removed": 146}}

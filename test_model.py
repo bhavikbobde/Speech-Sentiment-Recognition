@@ -88,7 +88,7 @@ def main():
 
     # Option 2: Use hardcoded path if not provided
     if not audio_path:
-        audio_path = "file_path"
+        audio_path = r"/Users/bhavikbobde/Downloads/Audio_Speech_Actors_01-24/Actor_24/03-01-08-02-02-02-24.wav"
         print(f"Using default audio file: {audio_path}")
 
     # Verify file existence

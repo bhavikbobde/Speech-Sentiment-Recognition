@@ -597,7 +597,7 @@ def streamlit_app():
 
 
 if __name__ == "__main__":
-    mode = ('train')  # Set to 'app' after training
+    mode = ('app')  # Set to 'app' after training
 
     if mode == 'train':
         result = train_model()
