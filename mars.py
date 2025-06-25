@@ -297,8 +297,8 @@ def evaluate_model(model, X_test, y_test, emotion_labels):
 
 def train_model():
     """Training pipeline with class-wise accuracy optimization"""
-    speech_dir = r"D:\datasets (NLP)\audio_speech"
-    song_dir = r"D:\datasets (NLP)\audio_song"
+    speech_dir = r"/Users/bhavikbobde/Downloads/Audio_Speech_Actors_01-24"
+    song_dir = r"/Users/bhavikbobde/Downloads/Audio_Song_Actors_01-24"
 
     print("Loading datasets...")
     speech_df = create_dataset_df(speech_dir)
@@ -597,7 +597,7 @@ def streamlit_app():
 
 
 if __name__ == "__main__":
-    mode = 'app'  # Set to 'app' after training
+    mode = ('train')  # Set to 'app' after training
 
     if mode == 'train':
         result = train_model()
