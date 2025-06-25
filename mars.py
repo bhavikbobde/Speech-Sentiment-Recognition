@@ -434,85 +434,88 @@ def train_model():
 
     return model, scaler
 
-
 def streamlit_app():
-    """Professional Streamlit UI with enhanced metrics display"""
+    """Modern Streamlit UI with updated colors, fonts, and text"""
 
     st.markdown("""
     <style>
     .stApp {
-        background: linear-gradient(135deg, #1a2a6c, #2a3a7c, #3a4a8c);
-        color: #fff;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(120deg, #232526, #414345 70%);
+        color: #f5f5f5;
+        font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
     }
     .stButton>button {
-        background: linear-gradient(to right, #ff416c, #ff4b2b);
-        color: #fff;
-        border-radius: 25px;
+        background: linear-gradient(to right, #00c6ff, #0072ff);
+        color: #f5f5f5;
+        border-radius: 18px;
         padding: 12px 28px;
-        font-weight: 600;
+        font-weight: 700;
         border: none;
-        box-shadow: 0 4px 15px rgba(255,75,43,0.4);
-        transition: all 0.3s ease;
+        box-shadow: 0 3px 12px rgba(0, 114, 255, 0.18);
+        transition: all 0.2s;
+        letter-spacing: 1px;
     }
     .stButton>button:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(255,75,43,0.6);
+        background: linear-gradient(to right, #0072ff, #00c6ff);
+        color: #fff;
+        transform: scale(1.03);
+        box-shadow: 0 6px 20px rgba(0, 114, 255, 0.25);
     }
-    .stFileUploader>div>div>div>div { color: #ff4b2b; }
+    .stFileUploader>div>div>div>div { color: #00c6ff; }
     .metric-container {
-        background: rgba(255,255,255,0.08);
-        backdrop-filter: blur(10px);
-        border-radius: 20px;
-        padding: 25px;
-        box-shadow: 0 8px 32px rgba(31,38,135,0.37);
-        border: 1px solid rgba(255,255,255,0.18);
+        background: rgba(0, 198, 255, 0.08);
+        backdrop-filter: blur(6px);
+        border-radius: 16px;
+        padding: 20px;
+        box-shadow: 0 6px 24px rgba(0,114,255,0.13);
+        border: 1px solid rgba(0,198,255,0.15);
     }
     .title-text {
-        font-size: 3.5rem;
-        font-weight: 800;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        font-size: 3rem;
+        font-weight: 900;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.25);
         text-align: center;
-        margin-bottom: 10px;
-        background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        margin-bottom: 8px;
+        background: linear-gradient(90deg, #00c6ff, #0072ff, #00c6ff);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
     .header-section {
-        background: rgba(0,0,0,0.5);
-        padding: 20px;
-        border-radius: 15px;
-        margin-bottom: 30px;
+        background: rgba(0, 0, 0, 0.35);
+        padding: 18px;
+        border-radius: 13px;
+        margin-bottom: 25px;
     }
     .result-section {
-        background: rgba(255,255,255,0.1);
-        border-radius: 20px;
-        padding: 30px;
-        margin: 20px 0;
+        background: rgba(0,198,255,0.07);
+        border-radius: 16px;
+        padding: 22px;
+        margin: 18px 0;
     }
     .footer {
         text-align: center;
-        padding: 20px;
-        font-size: 0.9rem;
-        color: rgba(255,255,255,0.7);
+        padding: 16px;
+        font-size: 1rem;
+        color: rgba(245,245,245,0.65);
+        letter-spacing: 1px;
     }
     </style>
     """, unsafe_allow_html=True)
 
-    st.markdown('<p class="title-text">VOICE EMOTION ANALYZER</p>', unsafe_allow_html=True)
+    st.markdown('<p class="title-text">AURORA: Voice Emotion Explorer</p>', unsafe_allow_html=True)
     st.markdown(
-        '<div style="text-align:center;font-size:1.2rem;margin-bottom:30px">'
-        'Advanced AI Emotion Detection from Speech Patterns</div>',
+        '<div style="text-align:center;font-size:1.15rem;margin-bottom:26px">'
+        'Uncover the emotional tone in your voice with next-gen AI detection</div>',
         unsafe_allow_html=True
     )
 
     if not all(os.path.exists(f) for f in ['emotion_model.h5', 'scaler.pkl']):
-        st.error("⚠️ MODEL FILES NOT FOUND")
-        st.info("Train model first by setting mode='train'")
+        st.error("🚫 Model files missing")
+        st.info("Please train the model first (mode='train').")
         return
 
     try:
-        with st.spinner("🚀 LOADING AI MODEL..."):
+        with st.spinner("🔄 Loading emotion recognition model..."):
             model = load_model('emotion_model.h5', custom_objects={'focal_loss_fn': focal_loss()})
             scaler = joblib.load('scaler.pkl')
             if os.path.exists('emotion_labels.json'):
@@ -520,18 +523,18 @@ def streamlit_app():
                     emotion_labels = json.load(f)
             else:
                 emotion_labels = EMOTION_LABELS
-        st.success("✅ AI MODEL LOADED SUCCESSFULLY!")
+        st.success("🎉 Model loaded successfully!")
     except Exception as e:
-        st.error(f"❌ MODEL ERROR: {e}")
+        st.error(f"❌ Model loading error: {e}")
         return
 
     with st.container():
-        st.subheader("🎤 UPLOAD SPEECH FILE")
-        st.write("Record or upload audio to analyze emotional content")
+        st.subheader("🎙️ Upload Your Voice")
+        st.write("Choose or record an audio file to analyze its emotional signature.")
         uploaded_file = st.file_uploader("", type=['wav', 'mp3'], label_visibility="collapsed")
 
     if uploaded_file:
-        with st.spinner("🔍 ANALYZING EMOTIONAL PATTERNS..."):
+        with st.spinner("🧠 Analyzing your audio..."):
             try:
                 with open('temp_audio.wav', 'wb') as f:
                     f.write(uploaded_file.getbuffer())
@@ -542,50 +545,52 @@ def streamlit_app():
                 emotion_prob = model.predict(features_reshaped, verbose=0)
                 emotion_idx = np.argmax(emotion_prob)
                 confidence = emotion_prob[0][emotion_idx]
-                st.success("✅ ANALYSIS COMPLETE!")
+                st.success("✅ Analysis complete!")
                 emotion_name = emotion_labels[emotion_idx]
                 with st.container():
                     st.markdown(
-                        f"<h2 style='text-align: center; color: {EMOTION_COLORS.get(emotion_name, '#FFFFFF')};'>"
-                        f"🎭 {emotion_name.upper()}</h2>",
+                        f"<h2 style='text-align: center; color: {EMOTION_COLORS.get(emotion_name, '#00c6ff')};'>"
+                        f"✨ {emotion_name.upper()}</h2>",
                         unsafe_allow_html=True
                     )
                     st.progress(int(confidence * 100))
                     st.caption(f"Confidence: {confidence:.2%}")
-                st.subheader("📊 EMOTION DISTRIBUTION")
+                st.subheader("📈 Emotion Probability Breakdown")
                 prob_df = pd.DataFrame({
                     'Emotion': emotion_labels,
                     'Probability': emotion_prob[0]
                 }).sort_values('Probability', ascending=False)
-                fig, ax = plt.subplots(figsize=(10, 6))
+                fig, ax = plt.subplots(figsize=(9, 5))
                 ax.bar(prob_df['Emotion'], prob_df['Probability'],
-                       color=[EMOTION_COLORS.get(e, '#3498db') for e in prob_df['Emotion']])
+                       color=[EMOTION_COLORS.get(e, '#00c6ff') for e in prob_df['Emotion']])
                 ax.set_ylim(0, 1)
-                plt.xticks(rotation=45)
+                plt.xticks(rotation=40)
                 st.pyplot(fig)
-                st.subheader("🔊 AUDIO PREVIEW")
+                st.subheader("🔊 Listen to Your Audio")
                 st.audio(uploaded_file)
                 os.remove('temp_audio.wav')
             except Exception as e:
-                st.error(f"❌ PROCESSING ERROR: {e}")
+                st.error(f"❌ Processing error: {e}")
 
     if os.path.exists('justification_report.json'):
         with open('justification_report.json', 'r') as f:
             justification = json.load(f)
         if 'status' not in justification:
             st.markdown("---")
-            st.subheader("📝 MODEL OPTIMIZATION REPORT")
+            st.subheader("🛠️ Model Optimization Insights")
             for emotion, details in justification.items():
-                with st.expander(f"❌ {emotion.upper()} - {details['accuracy']} accuracy"):
+                with st.expander(f"⚠️ {emotion.upper()} - {details['accuracy']} accuracy"):
                     st.write(details['reason'])
                     st.caption(f"Removed {details['samples_removed']} samples")
 
     st.markdown("---")
-    st.markdown("### About This AI")
+    st.markdown("### About Aurora")
     st.markdown(
-        "This system uses deep neural networks to detect emotional states from vocal patterns with state-of-the-art accuracy.")
+        "Aurora uses advanced neural networks to reveal the emotion in your voice—"
+        "helping you understand and visualize vocal sentiment with clarity."
+    )
     st.markdown(
-        '<div class="footer">Advanced Speech Emotion Recognition System | University Project</div>',
+        '<div class="footer">Aurora Voice Emotion Explorer &mdash; Academic AI Project</div>',
         unsafe_allow_html=True
     )
 
